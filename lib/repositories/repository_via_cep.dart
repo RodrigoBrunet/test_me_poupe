@@ -6,7 +6,7 @@ import 'package:test_me_poupe/models/modelretonoviacep.dart';
 class RepositoryViaCep {
   Future<ModelRetornoViaCep?> postCep(String cep) async {
     try {
-      Response response = await dio.post(
+      Response response = await dio.get(
         baseUrl + cep + varJson,
         options: Options(
           contentType: 'application/json',

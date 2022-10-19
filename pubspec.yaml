@@ -15,8 +15,9 @@ dependencies:
  
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
-  pretty_dio_logger: ^1.2.0-beta-1
+  pretty_dio_logger: ^1.1.1
   flutter_modular: ^5.0.3
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:
