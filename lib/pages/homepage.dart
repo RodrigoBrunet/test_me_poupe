@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:test_me_poupe/routes/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,6 +82,11 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 96,
             child: BottomNavigationBar(
+              onTap: (value) {
+                if (value == 0) Modular.to.navigate(NamedRoutes.home);
+                if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
+                if (value == 3) Modular.to.navigate(NamedRoutes.consulta);
+              },
               iconSize: 25,
               backgroundColor: Colors.white,
               elevation: 0,

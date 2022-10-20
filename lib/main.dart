@@ -14,8 +14,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Modular.setInitialRoute(NamedRoutes.consulta);
+    Modular.setInitialRoute(NamedRoutes.home);
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,
       title: 'Flutter Demo',

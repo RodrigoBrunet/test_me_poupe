@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:test_me_poupe/controllers/consulta_cep_controller.dart';
+import 'package:test_me_poupe/models/modelstate.dart';
+import 'package:test_me_poupe/routes/routes.dart';
 
 class ConsultaCep extends StatefulWidget {
   const ConsultaCep({Key? key}) : super(key: key);
@@ -9,10 +12,18 @@ class ConsultaCep extends StatefulWidget {
 }
 
 class _ConsultaCepState extends State<ConsultaCep> {
+  static const List<Color> colors = [
+    Color(0xFF6D51FF),
+    Color(0xFF6D51FF),
+    Color(0xFF6D51FF),
+  ];
+  int currentIndex = 0;
   final controller = ConsultaCepController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Container(
@@ -79,14 +90,99 @@ class _ConsultaCepState extends State<ConsultaCep> {
             ),
           ),
           SizedBox(
-            height: 100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            height: MediaQuery.of(context).size.height * 0.4,
+            width: double.infinity,
+            child: AnimatedBuilder(
+              animation: controller,
+              builder: (_, __) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 66),
+                    child: const Text(
+                      'Endereço:',
+                      style: TextStyle(
+                        color: Color(0xFF6D51FF),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 19,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  controller.state == modelState.stopped
+                      ? Container(
+                          padding: const EdgeInsets.only(left: 64),
+                          child: const Text('Nenhuma pesquisa realizada'))
+                      : controller.state == modelState.loading
+                          ? (const Center(child: CircularProgressIndicator()))
+                          : controller.state == modelState.sucess
+                              ? Center(
+                                  child: Text(
+                                    '${controller.retorno!.logradouro} '
+                                    ' - '
+                                    ' ${controller.retorno!.localidade}'
+                                    ' ${controller.retorno!.uf}'
+                                    ' - '
+                                    ' ${controller.retorno!.cep}',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                )
+                              : controller.state == modelState.error
+                                  ? const Center(
+                                      child: Text(
+                                        'Erro ao consultar cep, tente novamente !',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    )
+                                  : const Text(''),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 150),
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Stack(
               children: [
-                Text(controller.retorno!.logradouro.toString() +
-                    controller.retorno!.localidade.toString()),
-                Text(controller.retorno!.cep.toString())
+                SizedBox(
+                  height: 96,
+                  child: BottomNavigationBar(
+                    currentIndex: currentIndex,
+                    selectedItemColor: colors[currentIndex],
+                    onTap: (value) {
+                      setState(() {
+                        currentIndex = value;
+                      });
+
+                      if (value == 0) Modular.to.navigate(NamedRoutes.home);
+                      if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
+                      if (value == 3) Modular.to.navigate(NamedRoutes.consulta);
+                    },
+                    iconSize: 25,
+                    backgroundColor: Colors.white,
+                    elevation: 0,
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home),
+                        label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.search),
+                        label: 'Procurar',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.star),
+                        label: 'Favoritos',
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
