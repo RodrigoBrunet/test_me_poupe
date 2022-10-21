@@ -10,6 +10,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const List<Color> colors = [
+    Color(0xFF6D51FF),
+    Color(0xFF6D51FF),
+    Color(0xFF6D51FF),
+  ];
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +88,12 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 96,
             child: BottomNavigationBar(
+              currentIndex: currentIndex,
+              selectedItemColor: colors[currentIndex],
               onTap: (value) {
+                setState(() {
+                  currentIndex = value;
+                });
                 if (value == 0) Modular.to.navigate(NamedRoutes.home);
                 if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
                 if (value == 3) Modular.to.navigate(NamedRoutes.consulta);

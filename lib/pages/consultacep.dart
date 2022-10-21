@@ -77,6 +77,9 @@ class _ConsultaCepState extends State<ConsultaCep> {
                         icon: IconButton(
                           onPressed: () async {
                             await controller.enviaCep();
+                            if (controller.retorno != null) {
+                              controller.insertdb();
+                            }
                           },
                           icon: const Icon(Icons.search),
                         ),
@@ -99,7 +102,7 @@ class _ConsultaCepState extends State<ConsultaCep> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(left: 66),
+                    padding: const EdgeInsets.only(left: 57),
                     child: const Text(
                       'Endereço:',
                       style: TextStyle(
@@ -120,16 +123,22 @@ class _ConsultaCepState extends State<ConsultaCep> {
                           ? (const Center(child: CircularProgressIndicator()))
                           : controller.state == modelState.sucess
                               ? Center(
-                                  child: Text(
-                                    '${controller.retorno!.logradouro} '
-                                    ' - '
-                                    ' ${controller.retorno!.localidade}'
-                                    ' ${controller.retorno!.uf}'
-                                    ' - '
-                                    ' ${controller.retorno!.cep}',
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 58),
+                                    width: double.infinity,
+                                    color: Colors.green,
+                                    child: Text(
+                                      '${controller.retorno!.logradouro} '
+                                      ' - '
+                                      ' ${controller.retorno!.localidade}'
+                                      ' ${controller.retorno!.uf}'
+                                      ' - '
+                                      ' ${controller.retorno!.cep}',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
                                 )
@@ -145,43 +154,38 @@ class _ConsultaCepState extends State<ConsultaCep> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.only(top: 150),
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: Stack(
-              children: [
-                SizedBox(
-                  height: 96,
-                  child: BottomNavigationBar(
-                    currentIndex: currentIndex,
-                    selectedItemColor: colors[currentIndex],
-                    onTap: (value) {
-                      setState(() {
-                        currentIndex = value;
-                      });
+          const Spacer(
+            flex: 1,
+          ),
+          SizedBox(
+            height: 96,
+            child: BottomNavigationBar(
+              currentIndex: currentIndex,
+              selectedItemColor: colors[currentIndex],
+              onTap: (value) {
+                setState(() {
+                  currentIndex = value;
+                });
 
-                      if (value == 0) Modular.to.navigate(NamedRoutes.home);
-                      if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
-                      if (value == 3) Modular.to.navigate(NamedRoutes.consulta);
-                    },
-                    iconSize: 25,
-                    backgroundColor: Colors.white,
-                    elevation: 0,
-                    items: const <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.search),
-                        label: 'Procurar',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.star),
-                        label: 'Favoritos',
-                      ),
-                    ],
-                  ),
+                if (value == 0) Modular.to.navigate(NamedRoutes.home);
+                if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
+                if (value == 3) Modular.to.navigate(NamedRoutes.consulta);
+              },
+              iconSize: 25,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  label: 'Procurar',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.star),
+                  label: 'Favoritos',
                 ),
               ],
             ),
