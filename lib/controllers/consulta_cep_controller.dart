@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:test_me_poupe/db/db.dart';
 import 'package:test_me_poupe/models/modeldb.dart';
 import 'package:test_me_poupe/models/modelretonoviacep.dart';
 import 'package:test_me_poupe/models/modelstate.dart';
@@ -13,7 +14,6 @@ class ConsultaCepController extends ChangeNotifier {
   final cep = TextEditingController();
   var maskFormater = MaskTextInputFormatter(mask: '#####-###');
   modelState state = modelState.stopped;
-  Modeldb modeldb = Modeldb();
 
   enviaCep() async {
     if (state == modelState.loading) return;
@@ -33,10 +33,5 @@ class ConsultaCepController extends ChangeNotifier {
     }
   }
 
-  insertdb() {
-    modeldb.cep = retorno?.cep;
-    modeldb.uf = retorno?.uf;
-    modeldb.localidade = retorno?.localidade;
-    modeldb.logradouro = retorno?.logradouro;
-  }
+  insertdb() async {}
 }

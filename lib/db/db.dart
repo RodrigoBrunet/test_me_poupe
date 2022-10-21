@@ -1,29 +1,38 @@
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:test_me_poupe/models/modeldb.dart';
+import 'package:sqflite/sqlite_api.dart';
+import 'package:path/path.dart';
 
-import '../common/const.dart';
+class DB {
+  DB._();
+  static final DB instance = DB._();
+  //Instancia do SQLite
+  static Database? _database;
 
-Future<Database> _getDatabase() async {
-  return openDatabase(
-    join(await getDatabasesPath(), DATA_BASE_NAME),
-    onCreate: (db, version) {
-      return db.execute(CREATE_ADDRESS_TABLE_SCRIPT);
-    },
-    version: 1,
-  );
-}
+  get database async {
+    if (_database != null) return _database;
 
-Future create(Modeldb model) async {
-  try {
-    final Database db = await _getDatabase();
-
-    await db.insert(
-      TABLE_NAME,
-      model.toMap(),
-    );
-  } catch (ex) {
-    print(ex);
-    return;
+    return await _initDatabase();
   }
+
+  _initDatabase() async {
+    return await openDatabase(
+      join(await getDatabasesPath(), 'consultacep.db'),
+      version: 1,
+      onCreate: _onCreate,
+    );
+  }
+
+  _onCreate(db, versao) async {
+    await db.execute(_endereco);
+  }
+
+  String get _endereco => '''
+    CREATE TABLE endereco (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      logradouro TEXT,
+      localidade TEXT,
+      cep TEXT,
+      uf TEXT
+    );
+  ''';
 }
