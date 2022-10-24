@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:test_me_poupe/controllers/consulta_cep_controller.dart';
+import 'package:test_me_poupe/db/database.dart';
+import 'package:test_me_poupe/models/modeldb.dart';
 import 'package:test_me_poupe/models/modelstate.dart';
 import 'package:test_me_poupe/routes/routes.dart';
 
@@ -12,6 +14,12 @@ class ConsultaCep extends StatefulWidget {
 }
 
 class _ConsultaCepState extends State<ConsultaCep> {
+  Modeldb? model;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   static const List<Color> colors = [
     Color(0xFF6D51FF),
     Color(0xFF6D51FF),
@@ -78,7 +86,7 @@ class _ConsultaCepState extends State<ConsultaCep> {
                           onPressed: () async {
                             await controller.enviaCep();
                             if (controller.retorno != null) {
-                              controller.insertdb();
+                              controller.insert();
                             }
                           },
                           icon: const Icon(Icons.search),
@@ -127,7 +135,6 @@ class _ConsultaCepState extends State<ConsultaCep> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 58),
                                     width: double.infinity,
-                                    color: Colors.green,
                                     child: Text(
                                       '${controller.retorno!.logradouro} '
                                       ' - '
@@ -169,7 +176,7 @@ class _ConsultaCepState extends State<ConsultaCep> {
 
                 if (value == 0) Modular.to.navigate(NamedRoutes.home);
                 if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
-                if (value == 3) Modular.to.navigate(NamedRoutes.consulta);
+                if (value == 2) Modular.to.navigate(NamedRoutes.favorito);
               },
               iconSize: 25,
               backgroundColor: Colors.white,

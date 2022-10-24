@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                 });
                 if (value == 0) Modular.to.navigate(NamedRoutes.home);
                 if (value == 1) Modular.to.navigate(NamedRoutes.consulta);
-                if (value == 3) Modular.to.navigate(NamedRoutes.consulta);
+                if (value == 2) Modular.to.navigate(NamedRoutes.favorito);
               },
               iconSize: 25,
               backgroundColor: Colors.white,

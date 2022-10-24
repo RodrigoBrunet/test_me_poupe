@@ -18,9 +18,9 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   flutter_modular: ^5.0.3
   mask_text_input_formatter: ^2.4.0
-  sqflite: ^2.0.3+1
-  path:
-  path_provider:
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.2
+  
 
 dev_dependencies:
   flutter_test:
