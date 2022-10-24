@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:test_me_poupe/db/database.dart';
+import 'package:test_me_poupe/models/modeldb.dart';
 import 'package:test_me_poupe/models/modelretonoviacep.dart';
 import 'package:test_me_poupe/models/modelstate.dart';
 import 'package:test_me_poupe/repositories/repository_via_cep.dart';
@@ -45,10 +46,18 @@ class ConsultaCepController extends ChangeNotifier {
     notifyListeners();
   }
 
+  dynamic buscar = [];
   void query() async {
-    final findAll = await dbHelper.queryAllRows();
+    buscar = await dbHelper.queryAllRows();
     print('query all rows');
-    findAll.forEach(print);
+    // buscar.forEach(print);
+  }
+
+  Future<List<EnderecoModel>> getEnderecos() async {
+    final List<Map<String, dynamic>> maps = await dbHelper.queryAllRows();
+    return List.generate(maps.length, (i) {
+      return EnderecoModel.fromJson(maps[i]);
+    });
   }
 
   void delete() async {

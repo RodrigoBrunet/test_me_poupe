@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:test_me_poupe/pages/consultacep.dart';
 import 'package:test_me_poupe/pages/homepage.dart';
 
-import '../pages/listaenderecobd.dart';
+import '../pages/favoritopage.dart';
 
 class Routes {
   final navigatorKey = GlobalKey<NavigatorState>();
@@ -22,7 +22,7 @@ class Routes {
     ),
     ChildRoute(
       NamedRoutes.favorito,
-      child: (_, ___) => const ListEnderecoBd(),
+      child: (_, ___) => const FavoritoPage(),
       transition: TransitionType.fadeIn,
     ),
   ];

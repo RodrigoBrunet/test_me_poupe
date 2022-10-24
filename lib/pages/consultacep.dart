@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:test_me_poupe/controllers/consulta_cep_controller.dart';
-import 'package:test_me_poupe/db/database.dart';
-import 'package:test_me_poupe/models/modeldb.dart';
 import 'package:test_me_poupe/models/modelstate.dart';
 import 'package:test_me_poupe/routes/routes.dart';
 
@@ -14,7 +12,6 @@ class ConsultaCep extends StatefulWidget {
 }
 
 class _ConsultaCepState extends State<ConsultaCep> {
-  Modeldb? model;
   @override
   void initState() {
     super.initState();
