@@ -46,7 +46,7 @@ class _FavoritoPageState extends State<FavoritoPage> {
           ),
           const Text('Meus Favoritos'),
           SizedBox(
-            height: 110,
+            height: MediaQuery.of(context).size.height * 0.8,
             child: ListView.builder(
               itemCount: listaEndereco.length,
               itemBuilder: (BuildContext context, int index) {
